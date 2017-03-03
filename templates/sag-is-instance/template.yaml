@@ -1,0 +1,53 @@
+alias: sag-is-instance
+description: Software AG Integration Server
+
+environments:
+  default:  
+    repo.product:  ${}
+    repo.fix:      ${}
+    is.license.key.alias: ${}
+
+    is.node: local
+    is.host: localhost
+    is.instance.name: default
+    is.primary.port: 5555
+    is.diagnostic.port: 9999
+    is.fixes:
+      - wMFix.integrationServer.Core
+
+layers:
+  is:
+    productRepo: ${repo.product}            # install products from
+    fixRepo:     ${repo.fix}                # install fixes from
+    templates:   
+      - is-instance
+
+templates:
+  is-instance:
+    licenses:
+      "IntegrationServer/config/licenseKey.xml": ${is.license.key.alias} 
+    fixes: ${is.fixes}
+    products:
+      integrationServer:
+        ${is.instance.name}:
+          primary.port: ${is.primary.port}
+          diagnostic.port: ${is.diagnostic.port}
+          license.file: IntegrationServer/config/licenseKey.xml
+
+provision:
+  default:
+    is: ${is.node}
+
+nodes:
+  default:
+    default:
+      port: 8092
+      secure: false
+nodes:
+  default:
+    default:
+      port: 8092
+      secure: false
+
+    "${is.node}":
+      host: ${is.host}

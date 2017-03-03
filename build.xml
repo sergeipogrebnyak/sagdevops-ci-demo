@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<project xmlns="antlib:org.apache.tools.ant" basedir="." default="up" xmlns:if="ant:if" xmlns:unless="ant:unless" >
+	<import file="antcc/main.xml" />
+	
+	<!-- add custom targets here -->
+
+	<target name="up" depends="waitcc" description="Provision Integration Server" >
+		<antcall target="apply">
+			<param name="t" value="templates/sag-is-instance" />
+		</antcall>		
+	</target>
+
+</project>

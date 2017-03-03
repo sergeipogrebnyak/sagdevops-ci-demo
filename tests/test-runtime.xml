@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<project xmlns="antlib:org.apache.tools.ant" xmlns:au="antlib:org.apache.ant.antunit" basedir="..">
+	<description>
+		Verify runtime provisioning
+	</description>
+
+	<import file="../build.xml" />
+
+	<target name="test-is-runtime" depends="sagenvInit">
+        <property file="${env.properties}" />
+		<echo>Empty for now</echo>
+	</target>
+
+</project>
