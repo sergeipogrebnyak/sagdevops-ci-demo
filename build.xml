@@ -10,4 +10,10 @@
 		</antcall>		
 	</target>
 
+	<target name="deploy" depends="sagenvInit" description="Deploy assets" >
+		<property file="${env.properties}" />
+
+		<echo>Deploying to ${is.instance.name} @ ${is.host}:${is.primary.port}</echo>		
+	</target>
+
 </project>

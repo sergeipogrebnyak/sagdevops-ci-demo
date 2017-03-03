@@ -30,17 +30,10 @@ pipeline {
             steps {
                 unstash 'scripts'
                 timeout(time:2, unit:'MINUTES') {
-                    bat 'ant build test'
+                    bat 'ant build'
                     archive 'build/assets/**'
                 }
                 stash(name:'assets', includes:'build/assets/**')
-            }
-        }
-
-        stage("Deploy to QA") {
-            steps {
-                unstash 'assets'
-                echo "Deploy"
             }
         }
 
@@ -48,8 +41,8 @@ pipeline {
             steps {
                 unstash 'scripts'
 
-                timeout(time:1, unit:'MINUTES') {
-                    bat 'ant test -Denv=qa'
+                timeout(time:10, unit:'MINUTES') {
+                    bat 'ant up deploy test'
                 }
             }
             post {
@@ -62,21 +55,25 @@ pipeline {
             }
         }   
 
-        stage("Manual Testing") {
+        stage("QA Testing") {
             steps {
-                echo "Manual testing"
+                timeout(time:10, unit:'MINUTES') {
+                    bat 'ant up deploy test -Denv=qa'
+                }
             }
         } 
 
-        stage("Approval") {
+        stage("Manual Testing and Approval") {
             steps {
-                echo "Ready?"
+                input "Ready to deploy to Production?"
             }
-        }                          
+        } 
 
         stage("Deploy to Prod") {
             steps {
-                echo "Deploy"
+                timeout(time:10, unit:'MINUTES') {
+                    bat 'ant up deploy -Denv=prod'
+                }
             }
         }       
     }
