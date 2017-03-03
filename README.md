@@ -48,11 +48,13 @@ Provision Integration Server default/dev environment
 ant up
 ```
 
-## Build
+## Build Assets
 
 ```bash
 ant build
 ```
+The resulting flat file asset repository is in ./build/assets folder
+
 
 ## Deploy to Dev and Test
 
@@ -60,6 +62,18 @@ TODO:
 
 ```bash
 ant deploy test
+```
+
+## Deploy to QA and Test
+
+```bash
+ant deploy test -Denv=qa
+```
+
+## Deploy to PROD
+
+```bash
+ant deploy -Denv=prod
 ```
 
 
