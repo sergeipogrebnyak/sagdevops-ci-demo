@@ -16,6 +16,9 @@ pipeline {
 
     stages {
         stage("Checkout") {
+            agent {
+                label 'master'
+            }
             steps {
                 checkout scm
                 sh 'git submodule update --init' 
@@ -63,7 +66,13 @@ pipeline {
             steps {
                 echo "Manual testing"
             }
-        }                 
+        } 
+
+        stage("Approval") {
+            steps {
+                echo "Ready?"
+            }
+        }                          
 
         stage("Deploy to Prod") {
             steps {
